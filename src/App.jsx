@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { ToastProvider } from './context/ToastContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { Layout } from './components/Layout';
 
@@ -17,32 +18,35 @@ import { Users } from './pages/Users/Users';
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          
-          {/* Protected Routes */}
-          <Route element={<ProtectedRoute />}>
-            <Route element={<Layout />}>
-              <Route path="/" element={<Navigate to="/dashboard" replace />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/tasks" element={<Tasks />} />
-              <Route path="/tasks/new" element={<TaskForm />} />
-              <Route path="/tasks/:id" element={<TaskDetail />} />
-              <Route path="/visits" element={<Visits />} />
-              <Route path="/visits/:id" element={<VisitDetail />} />
-              <Route path="/reports" element={<Reports />} />
-              <Route path="/logs" element={<Logs />} />
-              <Route path="/users" element={<Users />} />
+    <ToastProvider>
+      <AuthProvider>
+        <Router>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+
+            {/* Protected Routes */}
+            <Route element={<ProtectedRoute />}>
+              <Route element={<Layout />}>
+                <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/tasks" element={<Tasks />} />
+                <Route path="/tasks/new" element={<TaskForm />} />
+                <Route path="/tasks/:id" element={<TaskDetail />} />
+                <Route path="/visits" element={<Visits />} />
+                <Route path="/visits/:id" element={<VisitDetail />} />
+                <Route path="/reports" element={<Reports />} />
+                <Route path="/logs" element={<Logs />} />
+                <Route path="/users" element={<Users />} />
+              </Route>
             </Route>
-          </Route>
-          
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
-        </Routes>
-      </Router>
-    </AuthProvider>
+
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          </Routes>
+        </Router>
+      </AuthProvider>
+    </ToastProvider>
   );
 }
 
 export default App;
+

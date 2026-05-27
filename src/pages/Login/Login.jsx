@@ -21,7 +21,8 @@ export const Login = () => {
       await login(email, password);
       navigate('/dashboard');
     } catch (err) {
-      setError('Invalid email or password');
+      // The API throws { error: true, code: '...', message: '...' }
+      setError(err.message || 'Unable to connect to the server. Please try again.');
     } finally {
       setIsLoading(false);
     }

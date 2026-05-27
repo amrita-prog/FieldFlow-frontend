@@ -1,41 +1,30 @@
 import api from './axios';
 
+// ── 1.1 Login ──────────────────────────────────────────────────
+// POST /auth/login/ → returns { access, refresh, user }
 export const login = async (email, password) => {
-  // Mock delay
-  await new Promise(resolve => setTimeout(resolve, 800));
-  
-  // Create a mock user based on the email
-  let role = 'Field Agent';
-  let permissions = ['tasks.read', 'visits.read', 'visits.update'];
-  
-  if (email.includes('admin')) {
-    role = 'Admin';
-    permissions = ['tasks.create', 'tasks.read', 'tasks.update', 'tasks.delete', 'visits.create', 'visits.read', 'visits.update', 'visits.delete'];
-  } else if (email.includes('manager')) {
-    role = 'Regional Manager';
-    permissions = ['tasks.create', 'tasks.read', 'tasks.update', 'visits.read', 'visits.update'];
-  } else if (email.includes('lead')) {
-    role = 'Team Lead';
-    permissions = ['tasks.create', 'tasks.read', 'tasks.update', 'visits.read', 'visits.update'];
-  } else if (email.includes('auditor')) {
-    role = 'Auditor';
-    permissions = ['tasks.read', 'visits.read', 'reports.read', 'logs.read'];
-  }
-  
-  return {
-    access: 'mock-access-token-12345',
-    refresh: 'mock-refresh-token-67890',
-    user: {
-      id: 1,
-      username: email.split('@')[0],
-      email: email,
-      role: role,
-      permissions: permissions
-    }
-  };
+  const response = await api.post('/auth/login/', { email, password });
+  return response.data;
 };
 
-export const logout = async () => {
-  await new Promise(resolve => setTimeout(resolve, 500));
-  return { success: true };
+// ── 1.3 Logout ─────────────────────────────────────────────────
+// POST /auth/logout/ → requires { refresh } in body
+export const logout = async (refreshToken) => {
+  const response = await api.post('/auth/logout/', { refresh: refreshToken });
+  return response.data;
+};
+
+// ── 1.2 Refresh Token ──────────────────────────────────────────
+// POST /auth/token/refresh/ → called by axios interceptor (not directly by components)
+export const refreshToken = async (refresh) => {
+  const response = await api.post('/auth/token/refresh/', { refresh });
+  return response.data; // { access, refresh } — both rotated
+};
+
+// ── 1.4 Get Current User (Me) ──────────────────────────────────
+// GET /auth/me/ → same shape as login user object
+// Called on app startup to restore session from existing token
+export const getMe = async () => {
+  const response = await api.get('/auth/me/');
+  return response.data;
 };
