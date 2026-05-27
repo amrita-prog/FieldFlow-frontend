@@ -78,9 +78,9 @@ export const Visits = () => {
           <tbody>
             {visits.map(visit => (
               <tr key={visit.id} onClick={() => navigate(`/visits/${visit.id}`)} style={{ cursor: 'pointer' }}>
-                <td className="font-medium">{visit.location}</td>
-                <td>{visit.agent}</td>
-                <td style={{ color: 'var(--primary)' }}>{visit.task}</td>
+                <td className="font-medium">{visit.location?.name || visit.location}</td>
+                <td>{visit.agent?.name || visit.agent?.username || visit.agent}</td>
+                <td style={{ color: 'var(--primary)' }}>{visit.task?.title || visit.task?.name || visit.task}</td>
                 <td>{getStatusBadge(visit.status)}</td>
                 <td>{getOutcomeBadge(visit.outcome)}</td>
                 <td>{visit.started_at ? new Date(visit.started_at).toLocaleString() : '-'}</td>

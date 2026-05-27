@@ -35,7 +35,7 @@ export const Sidebar = () => {
     <div style={styles.sidebar}>
       <div style={styles.logoContainer}>
         <h2 style={styles.logoText}>FieldFlow</h2>
-        <span className="badge badge-info mt-2">{user?.role}</span>
+        <span className="badge badge-info mt-2">{user?.role?.name || user?.role}</span>
       </div>
       
       <nav style={styles.nav}>

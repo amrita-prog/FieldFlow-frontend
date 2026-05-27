@@ -90,9 +90,9 @@ export const Tasks = () => {
                 <td className="font-medium">{task.title}</td>
                 <td>{getStatusBadge(task.status)}</td>
                 <td>{getPriorityBadge(task.priority)}</td>
-                <td>{task.assigned_to}</td>
-                <td>{task.region}</td>
-                <td>{task.team}</td>
+                <td>{task.assigned_to?.name || task.assigned_to?.username || task.assigned_to}</td>
+                <td>{task.region?.name || task.region}</td>
+                <td>{task.team?.name || task.team}</td>
                 <td>{task.due_date}</td>
                 <td>
                   <Button variant="ghost" onClick={(e) => { e.stopPropagation(); navigate(`/tasks/${task.id}`); }}>View</Button>

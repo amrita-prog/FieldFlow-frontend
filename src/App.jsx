@@ -7,7 +7,10 @@ import { Layout } from './components/Layout';
 import { Login } from './pages/Login/Login';
 import { Dashboard } from './pages/Dashboard/Dashboard';
 import { Tasks } from './pages/Tasks/Tasks';
+import { TaskDetail } from './pages/Tasks/TaskDetail';
+import { TaskForm } from './pages/Tasks/TaskForm';
 import { Visits } from './pages/Visits/Visits';
+import { VisitDetail } from './pages/Visits/VisitDetail';
 import { Reports } from './pages/Reports/Reports';
 import { Logs } from './pages/Logs/Logs';
 import { Users } from './pages/Users/Users';
@@ -25,7 +28,10 @@ function App() {
               <Route path="/" element={<Navigate to="/dashboard" replace />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/tasks" element={<Tasks />} />
+              <Route path="/tasks/new" element={<TaskForm />} />
+              <Route path="/tasks/:id" element={<TaskDetail />} />
               <Route path="/visits" element={<Visits />} />
+              <Route path="/visits/:id" element={<VisitDetail />} />
               <Route path="/reports" element={<Reports />} />
               <Route path="/logs" element={<Logs />} />
               <Route path="/users" element={<Users />} />

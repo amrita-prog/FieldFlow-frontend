@@ -29,9 +29,9 @@ export const Users = () => {
               <tr key={u.id}>
                 <td className="font-medium">{u.username}</td>
                 <td>{u.email}</td>
-                <td><Badge variant="info">{u.role}</Badge></td>
-                <td>{u.region}</td>
-                <td>{u.team}</td>
+                <td><Badge variant="info">{u.role?.name || u.role}</Badge></td>
+                <td>{u.region?.name || u.region}</td>
+                <td>{u.team?.name || u.team}</td>
                 <td>
                   <Badge variant={u.is_active ? 'success' : 'danger'}>
                     {u.is_active ? 'Active' : 'Inactive'}

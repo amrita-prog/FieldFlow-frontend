@@ -12,7 +12,8 @@ export const usePermission = () => {
 
   const hasRole = (roles) => {
     if (!user || !user.role) return false;
-    return roles.includes(user.role);
+    const roleName = typeof user.role === 'object' ? user.role.name : user.role;
+    return roles.includes(roleName);
   };
 
   return { can, hasRole };
