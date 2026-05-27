@@ -1,16 +1,71 @@
-# React + Vite
+# FieldFlow — Field Force Management System (Frontend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+FieldFlow is a role-based management system designed to streamline field operations. It enables managers to assign tasks, field agents to log visits and capture notes, and automatically utilizes AI to analyze visit notes for risk flagging and sentiment analysis.
 
-Currently, two official plugins are available:
+This repository contains the **React (Vite)** frontend application.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Live Demo & Repositories
 
-## React Compiler
+- **Frontend (Live)**: [https://field-flow-frontend-puce.vercel.app/login](https://field-flow-frontend-puce.vercel.app/login)
+- **Backend (API)**: [https://fieldflow-6ykv.onrender.com/](https://fieldflow-6ykv.onrender.com/)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Frontend Repository**: [amrita-prog/FieldFlow-frontend](https://github.com/amrita-prog/FieldFlow-frontend) *(this repo)*
+- **Backend Repository**: [amrita-prog/FieldFlow](https://github.com/amrita-prog/FieldFlow)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## ✨ Key Features
+
+- **Role-Based Dashboards**: Dynamic UI that adapts based on whether you log in as Admin, Regional Manager, Team Lead, Field Agent, or Auditor.
+- **Task & Visit Management**: Interactive tables and forms to seamlessly assign tasks and track visit lifecycles.
+- **AI Risk Visualizations**: Renders AI-analyzed insights and highlights high-risk visits with color-coded badges.
+- **Activity Logs**: Searchable and filterable audit trails tracking system-wide actions.
+
+---
+
+## 🛠️ Technology Stack
+
+- **Framework**: React (Vite)
+- **Routing**: React Router DOM
+- **Styling**: Vanilla CSS (Custom Design System)
+- **HTTP Client**: Axios (with JWT Token Rotation Interceptors)
+- **Icons**: Lucide React
+
+---
+
+## 💻 How to Run Locally
+
+Follow these steps to get the React frontend running on your local machine.
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/amrita-prog/FieldFlow-frontend.git
+cd FieldFlow-frontend
+```
+
+### 2. Install Dependencies
+```bash
+npm install
+```
+
+### 3. Start the Development Server
+```bash
+npm run dev
+```
+The application will start on `http://localhost:5173`.
+
+> **Note:** By default, the application is configured to point to the live Render backend (`https://fieldflow-6ykv.onrender.com/api`). You do not need to run the backend locally to test the frontend!
+
+---
+
+## 🔑 Default Test Credentials
+
+You can test the live app or your local instance using these dummy accounts (All passwords except Admin are **`Pass@123`**):
+
+| Role | Email | Password |
+|---|---|---|
+| **Admin** | `admin@fieldflow.com` | `Admin@123` |
+| **Regional Manager** | `rm.north@fieldflow.com` | `Pass@123` |
+| **Team Lead** | `tl.alpha@fieldflow.com` | `Pass@123` |
+| **Field Agent** | `agent1@fieldflow.com` | `Pass@123` |
+| **Auditor** | `auditor@fieldflow.com` | `Pass@123` |
