@@ -54,7 +54,7 @@ export const TaskForm = () => {
     try {
       const newTask = await createTask(payload);
       showToast('Task created successfully', 'success');
-      navigate(`/tasks/${newTask.id}`);
+      navigate('/tasks');
     } catch (err) {
       if (err.details) {
         setErrors(err.details);
