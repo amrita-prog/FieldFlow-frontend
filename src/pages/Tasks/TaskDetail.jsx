@@ -34,7 +34,7 @@ export const TaskDetail = () => {
       setAssignedToId(taskData.assigned_to?.id || '');
       
       // Fetch linked visits (note: exact param might depend on backend, usually task_id or task)
-      const visitsData = await getVisits({ task_id: id });
+      const visitsData = await getVisits({ task: id });
       setLinkedVisits(visitsData.results || []);
     } catch (err) {
       if (err.code === 'NOT_FOUND') {
