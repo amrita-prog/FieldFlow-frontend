@@ -73,6 +73,7 @@ export const VisitDetail = () => {
     setActionLoading(true);
     try {
       await completeVisit(id, completeOutcome);
+      window.alert("The task will be marked as complete once verified.");
       showToast('Visit completed', 'success');
       await fetchVisitData();
     } catch (err) {

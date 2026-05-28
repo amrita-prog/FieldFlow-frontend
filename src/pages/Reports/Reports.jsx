@@ -118,7 +118,7 @@ export const Reports = () => {
                 <tbody>
                   {data.map((item, i) => (
                     <tr key={i}>
-                      <td className="font-medium">{item.agent_name}</td>
+                      <td className="font-medium">{item.agent_name || item.agent || item.agent__username || item.agent_email || item.assigned_to__username || 'Unknown Agent'}</td>
                       <td>{item.total_completed}</td>
                       <td>{item.avg_hours_to_complete != null ? parseFloat(item.avg_hours_to_complete).toFixed(1) : '-'}</td>
                     </tr>

@@ -107,6 +107,13 @@ export const TaskDetail = () => {
     setCreatingVisit(true);
     try {
       const visit = await createVisit({ task: id, task_id: id, location });
+      if (task.status === 'pending') {
+        try {
+          await updateTaskStatus(id, 'in_progress');
+        } catch (e) {
+          console.error("Failed to update task status", e);
+        }
+      }
       showToast('Visit created successfully', 'success');
       // Redirect to the newly created visit or refresh list
       if (visit && visit.id) {
@@ -175,9 +182,11 @@ export const TaskDetail = () => {
           <Card>
             <div className="flex justify-between items-center mb-4">
               <h3 className="h4 m-0">Linked Visits</h3>
-              <Button size="sm" onClick={handleCreateVisit} disabled={creatingVisit}>
-                {creatingVisit ? 'Creating...' : '+ Create Visit'}
-              </Button>
+              {task.status !== 'completed' && task.status !== 'cancelled' && (
+                <Button size="sm" onClick={handleCreateVisit} disabled={creatingVisit}>
+                  {creatingVisit ? 'Creating...' : '+ Start New Visit'}
+                </Button>
+              )}
             </div>
             {linkedVisits.length === 0 ? (
               <p className="text-muted">No visits linked to this task.</p>
