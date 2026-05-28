@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { useToast } from '../../hooks/useToast';
-import { 
-  getPendingTasksReport, 
-  getAgentPerformanceReport, 
-  getRecentVisitsReport, 
-  getTaskDistributionReport 
+import {
+  getPendingTasksReport,
+  getAgentPerformanceReport,
+  getRecentVisitsReport,
+  getTaskDistributionReport
 } from '../../api/reports';
 
 export const Reports = () => {
@@ -28,7 +28,7 @@ export const Reports = () => {
       setData([]);
       try {
         let res;
-        switch(activeTab) {
+        switch (activeTab) {
           case 'pending':
             res = await getPendingTasksReport();
             break;
@@ -68,7 +68,7 @@ export const Reports = () => {
       return <div style={{ padding: '3rem', textAlign: 'center', color: 'var(--text-muted)' }}>No data available for this report.</div>;
     }
 
-    switch(activeTab) {
+    switch (activeTab) {
       case 'pending':
         return (
           <div>
@@ -116,13 +116,18 @@ export const Reports = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map((item, i) => (
-                    <tr key={i}>
-                      <td className="font-medium">{item.agent_name || item.agent || item.agent__username || item.agent_email || item.assigned_to__username || 'Unknown Agent'}</td>
-                      <td>{item.total_completed}</td>
-                      <td>{item.avg_hours_to_complete != null ? parseFloat(item.avg_hours_to_complete).toFixed(1) : '-'}</td>
-                    </tr>
-                  ))}
+                  {data.map((item, i) => {
+                    const rawName = item.agent_name || item.agent || item.agent__username || item.assigned_to__username || 'Unknown Agent';
+                    const displayName = typeof rawName === 'string' && rawName.includes('@') ? rawName.split('@')[0] : rawName;
+                    
+                    return (
+                      <tr key={i}>
+                        <td className="font-medium" style={{ textTransform: 'capitalize' }}>{displayName}</td>
+                        <td>{item.total_completed}</td>
+                        <td>{item.avg_hours_to_complete != null ? parseFloat(item.avg_hours_to_complete).toFixed(1) : '-'}</td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -201,11 +206,11 @@ export const Reports = () => {
   return (
     <div className="page-container">
       <h1 className="h2 mb-6">Reports</h1>
-      
+
       <div className="flex gap-2 mb-6" style={{ borderBottom: '1px solid var(--border-color)', paddingBottom: '1rem', overflowX: 'auto' }}>
         {tabs.map(tab => (
-          <Button 
-            key={tab.id} 
+          <Button
+            key={tab.id}
             variant={activeTab === tab.id ? 'primary' : 'ghost'}
             onClick={() => setActiveTab(tab.id)}
             style={{ whiteSpace: 'nowrap' }}
