@@ -7,7 +7,7 @@ import { useToast } from '../../hooks/useToast';
 import { usePermission } from '../../hooks/usePermission';
 import { getTaskById, updateTaskStatus, assignTask, deleteTask } from '../../api/tasks';
 import { getUsers } from '../../api/users';
-import { getVisits } from '../../api/visits';
+import { getVisits, createVisit } from '../../api/visits';
 
 export const TaskDetail = () => {
   const { id } = useParams();
@@ -26,6 +26,7 @@ export const TaskDetail = () => {
   const [deleteLoading, setDeleteLoading] = useState(false);
   
   const [linkedVisits, setLinkedVisits] = useState([]);
+  const [creatingVisit, setCreatingVisit] = useState(false);
 
   const fetchTaskData = useCallback(async () => {
     try {
@@ -100,6 +101,26 @@ export const TaskDetail = () => {
     }
   };
 
+  const handleCreateVisit = async () => {
+    const location = window.prompt("Enter location for this visit:");
+    if (!location) return;
+    setCreatingVisit(true);
+    try {
+      const visit = await createVisit({ task: id, task_id: id, location });
+      showToast('Visit created successfully', 'success');
+      // Redirect to the newly created visit or refresh list
+      if (visit && visit.id) {
+        navigate(`/visits/${visit.id}`);
+      } else {
+        await fetchTaskData();
+      }
+    } catch (err) {
+      showToast(err.message || 'Failed to create visit', 'error');
+    } finally {
+      setCreatingVisit(false);
+    }
+  };
+
   if (loading) {
     return <div className="page-container">Loading task...</div>;
   }
@@ -152,7 +173,12 @@ export const TaskDetail = () => {
           </Card>
 
           <Card>
-            <h3 className="h4 mb-4">Linked Visits</h3>
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="h4 m-0">Linked Visits</h3>
+              <Button size="sm" onClick={handleCreateVisit} disabled={creatingVisit}>
+                {creatingVisit ? 'Creating...' : '+ Create Visit'}
+              </Button>
+            </div>
             {linkedVisits.length === 0 ? (
               <p className="text-muted">No visits linked to this task.</p>
             ) : (
@@ -237,8 +263,8 @@ export const TaskDetail = () => {
               <p className="font-medium">{task.team?.name || '-'}</p>
             </div>
             
-            {/* Show assignment dropdown if user has update permissions, else show static agent name */}
-            {can('tasks', 'update') ? (
+            {/* Show assignment dropdown if user has Admin or Team Lead roles, else show static agent name */}
+            {hasRole(['Admin', 'Team Lead']) ? (
               <div className="mt-4 pt-4" style={{ borderTop: '1px solid var(--border-color)' }}>
                 <p className="text-sm text-muted mb-2">Assigned Agent</p>
                 <div className="flex gap-2">
